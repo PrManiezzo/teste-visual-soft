@@ -67,7 +67,39 @@ export const UserListPage: React.FC = () => {
 
       <SearchBar value={search} onChange={setSearch} placeholder="Buscar por nome, email ou cidade..." />
 
-      {loading && <div className="state-message">Carregando...</div>}
+      {loading && (
+        <div className="table-container">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Estado</th>
+                <th>Cidade</th>
+                <th style={{ textAlign: 'center' }}>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <tr key={i}>
+                  <td><div className="skeleton skeleton-text" style={{ width: '80%' }}></div></td>
+                  <td><div className="skeleton skeleton-text" style={{ width: '60%' }}></div></td>
+                  <td><div className="skeleton skeleton-text" style={{ width: '70%' }}></div></td>
+                  <td><div className="skeleton skeleton-text" style={{ width: '50%' }}></div></td>
+                  <td><div className="skeleton skeleton-text" style={{ width: '90%' }}></div></td>
+                  <td>
+                    <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                      <div className="skeleton skeleton-input" style={{ width: '60px', height: '24px' }}></div>
+                      <div className="skeleton skeleton-input" style={{ width: '60px', height: '24px' }}></div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       {error && (
         <div className="state-error">
           <strong>Erro:</strong> {error}

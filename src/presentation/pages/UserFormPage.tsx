@@ -27,7 +27,7 @@ type UserFormData = {
 };
 
 const schema = yup.object({
-  name: yup.string().required('Nome obrigatório'),
+  name: yup.string().transform((value) => value.trim()).required('Nome obrigatório').min(1, 'Nome obrigatório'),
   email: yup.string().email('Email inválido').required('Email obrigatório'),
   phone: yup.string().required('Telefone obrigatório'),
   state: yup.string().required('Estado obrigatório'),
@@ -134,8 +134,12 @@ export const UserFormPage: React.FC = () => {
   }, [id, isEdit, setValue, addToast, getUser]);
 
   const onFormSubmit = (data: UserFormData) => {
+    const trimmedName = data.name.trim();
+    if (!trimmedName) return;
+
     const dataToSend = {
       ...data,
+      name: trimmedName,
       city: `${data.state}|${data.city}`,
     };
 
